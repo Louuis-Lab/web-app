@@ -47,7 +47,10 @@ export default function Hero() {
           <span className="typing-animation">Onde a curiosidade encontra a ciência</span>
         </h1>
       </div>
+
+      {/* Carrossel com botões reorganizados */}
       <div className="flex flex-col md:flex-row items-center gap-4">
+        {/* Botão Voltar (apenas desktop) */}
         <button
           onClick={scrollPrev}
           className="hidden md:flex w-4 h-4 items-center justify-center rounded-full bg-[#f53098] text-white shadow-md hover:shadow-lg transition-all"
@@ -55,6 +58,8 @@ export default function Hero() {
         >
           <ChevronLeft className="w-2 h-2" />
         </button>
+
+        {/* Carrossel principal */}
         <div className="embla flex-1 w-full overflow-hidden mb-4 md:mb-0" ref={emblaRef}>
           <div className="embla__container flex gap-4 w-full">
             {images.map((src, index) => (
@@ -66,15 +71,16 @@ export default function Hero() {
                   <Image
                     src={src}
                     alt={`Imagem ${index + 1}`}
-                    layout="fill"
-                    objectFit="cover"
-                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
+                    fill
+                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover"
                   />
                 </div>
               </div>
             ))}
           </div>
         </div>
+
+        {/* Botão Avançar (apenas desktop) */}
         <button
           onClick={scrollNext}
           className="hidden md:flex w-4 h-4 items-center justify-center rounded-full bg-[#f53098] text-white shadow-md hover:shadow-lg transition-all"
@@ -83,6 +89,8 @@ export default function Hero() {
           <ChevronRight className="w-2 h-2" />
         </button>
       </div>
+
+      {/* CSS para typing animation infinita */}
       <style jsx>{`
         .typing-animation {
           display: inline-block;
