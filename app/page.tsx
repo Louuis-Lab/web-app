@@ -1,35 +1,31 @@
 import Header from "@/components/header";
-import Footer from "@/components/footer";
-import Contact from "@/components/contact";
-import Mission from "@/components/mission";
-import History from "@/components/our-history";
-import Unicorn from "@/components/unicorn";
-import Values from "@/components/values";
-import Vision from "@/components/vision";
 import Hero from "@/components/hero";
+import Footer from "@/components/footer";
+import Sobre from "@/components/sobre";
+import MissionVision from "@/components/missionvision";
+import Values from "@/components/values";
 import { Suspense } from "react";
-import AboutUs from "@/components/about-us";
+import Contact from "@/components/contact";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main className="p-4 text-2xl ">
-        <Hero/>
-        <section>
-          <AboutUs/>
-          <Mission />
-          <Vision />
-          <Values />  
-        </section>
-        <section>
-          <History />
-          <Unicorn />
-        </section>
-        <Suspense fallback={<div>Carregando contato...</div>}>
+
+      <main className="text-2xl">
+        <Hero />
+
+        {/* Seções principais */}
+        <Sobre />
+        <MissionVision />
+        <Values />
+
+        {/* Contato */}
+        <Suspense fallback={<div className="py-16 text-center">Carregando contato...</div>}>
           <Contact />
         </Suspense>
       </main>
+
       <Footer />
     </>
   );
