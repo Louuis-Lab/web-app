@@ -3,6 +3,7 @@ import { useCallback } from "react";
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
+import { ChevronLeft, ChevronRight } from 'lucide-react';
 
 const images = [
   "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop",
@@ -14,7 +15,17 @@ const images = [
 
 export default function Hero() {
   const [emblaRef, emblaApi] = useEmblaCarousel(
-    { loop: true, align: "start", slidesToScroll: 1 },
+    { 
+      loop: true, 
+      align: "start", 
+      slidesToScroll: 1,
+      breakpoints: {
+        '(min-width: 768px)': {
+          slidesToScroll: 2,
+          dragFree: false
+        }
+      }
+    },
     [Autoplay({ delay: 3000, stopOnInteraction: false })]
   );
 
@@ -22,79 +33,63 @@ export default function Hero() {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <div className="max-w-5xl mx-auto px-4">
+    <div className="max-w-5xl mx-auto px-4 pt-2 pb-12" id="home">
       {/* Seção do logo + slogan */}
-      <div className="flex flex-col items-center mt-4 mb-8">
-        <Image src="/big-logo.png" alt="Logo" width={300} height={100} className="mb-4" />
-        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
+      <div className="flex flex-col items-center mt-4 mb-6">
+        <Image 
+          src="/big-logo.png" 
+          alt="Logo" 
+          width={200} 
+          height={67} 
+          className="mb-3"
+        />
+        <h1 className="text-xl font-bold text-center leading-tight">
           <span className="typing-animation">Onde a curiosidade encontra a ciência</span>
         </h1>
       </div>
-
-      {/* Carrossel com botões */}
-      <div className="flex items-center gap-2">
-        {/* Botão Voltar */}
+      <div className="flex flex-col md:flex-row items-center gap-4">
         <button
           onClick={scrollPrev}
-          className="w-4 h-4 flex items-center justify-center rounded-full focus:outline-none"
-          style={{ backgroundColor: "var(--pink)" }}
+          className="hidden md:flex w-4 h-4 items-center justify-center rounded-full bg-[#f53098] text-white shadow-md hover:shadow-lg transition-all"
+          aria-label="Imagem anterior"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-2 h-2 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
-          </svg>
+          <ChevronLeft className="w-2 h-2" />
         </button>
-
-        {/* Carrossel */}
-        <div className="embla flex-1 overflow-hidden" ref={emblaRef}>
-          <div className="embla__container flex gap-2">
+        <div className="embla flex-1 w-full overflow-hidden mb-4 md:mb-0" ref={emblaRef}>
+          <div className="embla__container flex gap-4 w-full">
             {images.map((src, index) => (
-              <div key={index} className="embla__slide flex-shrink-0 w-20 sm:w-24 md:w-28">
-                <div className="relative w-full h-20 sm:h-24 md:h-28">
+              <div 
+                key={index} 
+                className="embla__slide flex-[0_0_100%] md:flex-[0_0_calc(50%-1rem)] aspect-square"
+              >
+                <div className="relative w-full h-full">
                   <Image
                     src={src}
                     alt={`Imagem ${index + 1}`}
                     layout="fill"
                     objectFit="cover"
-                    className="rounded-md shadow-md"
+                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow"
                   />
                 </div>
               </div>
             ))}
           </div>
         </div>
-
-        {/* Botão Avançar */}
         <button
           onClick={scrollNext}
-          className="w-4 h-4 flex items-center justify-center rounded-full focus:outline-none"
-          style={{ backgroundColor: "var(--pink)" }}
+          className="hidden md:flex w-4 h-4 items-center justify-center rounded-full bg-[#f53098] text-white shadow-md hover:shadow-lg transition-all"
+          aria-label="Próxima imagem"
         >
-          <svg
-            xmlns="http://www.w3.org/2000/svg"
-            className="w-2 h-2 text-white"
-            fill="none"
-            viewBox="0 0 24 24"
-            stroke="currentColor"
-          >
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
-          </svg>
+          <ChevronRight className="w-2 h-2" />
         </button>
       </div>
-
-      {/* CSS para typing animation infinita */}
       <style jsx>{`
         .typing-animation {
           display: inline-block;
           overflow: hidden;
+          border-right: 3px solid #f53098;
+          animation: typing 2s steps(40, end) infinite alternate, blink 0.5s step-end infinite;
           white-space: nowrap;
-          border-right: 2px solid var(--pink);
-          animation: typing 4s steps(40, end) infinite alternate, blink 0.75s step-end infinite;
         }
 
         @keyframes typing {

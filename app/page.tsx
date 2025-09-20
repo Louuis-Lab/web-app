@@ -11,21 +11,16 @@ export default function Home() {
   return (
     <>
       <Header />
-
-      <main className="text-2xl">
+      <div></div>
+      <main className="text-2xl" >
         <Hero />
-
-        {/* Seções principais */}
         <Sobre />
         <MissionVision />
         <Values />
-
-        {/* Contato */}
         <Suspense fallback={<div className="py-16 text-center">Carregando contato...</div>}>
           <Contact />
         </Suspense>
       </main>
-
       <Footer />
     </>
   );
