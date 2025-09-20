@@ -1,65 +1,111 @@
 "use client";
-import * as React from "react";
-import { useState, useEffect } from "react";
+import { useCallback } from "react";
 import Image from "next/image";
+import useEmblaCarousel from "embla-carousel-react";
+import Autoplay from "embla-carousel-autoplay";
 
-import { Card, CardContent } from "@/components/ui/card";
-import {
-  Carousel,
-  CarouselContent,
-  CarouselItem,
-  CarouselNext,
-  CarouselPrevious,
-} from "@/components/ui/carousel";
+const images = [
+  "https://images.unsplash.com/photo-1506744038136-46273834b3fb?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1501785888041-af3ef285b470?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1501594907351-0c4c1d6d9e6b?w=800&h=600&fit=crop",
+  "https://images.unsplash.com/photo-1491553895911-0055eca6402d?w=800&h=600&fit=crop",
+];
 
 export default function Hero() {
-  const itemCount = 5;
-  const [activeIndex, setActiveIndex] = useState(0);
+  const [emblaRef, emblaApi] = useEmblaCarousel(
+    { loop: true, align: "start", slidesToScroll: 1 },
+    [Autoplay({ delay: 3000, stopOnInteraction: false })]
+  );
 
-  // Autoplay effect
-  useEffect(() => {
-    const interval = setInterval(() => {
-      setActiveIndex((prev) => (prev + 1) % itemCount);
-    }, 2500);
-    return () => clearInterval(interval);
-  }, [itemCount]);
+  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
+  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <div className="flex justify-center items-center min-h-[70vh]">
-      <Carousel
-        opts={{ align: "center" }}
-        className="w-full max-w-6xl"
-        value={activeIndex}
-        onValueChange={setActiveIndex}
-      >
-        <CarouselContent>
-          {Array.from({ length: itemCount }).map((_, index) => (
-            <CarouselItem key={index} className="basis-1/3 flex justify-center items-center">
-              <Card className="w-full h-full" style={{ background: "var(--pink)" }}>
-                <CardContent className="p-0 w-full h-full">
-                    <div className="aspect-square w-full h-full overflow-hidden">
-                    <Image
-                        src={`https://picsum.photos/seed/${index}/800`}
-                        alt={`Mock ${index + 1}`}
-                        width={10000}
-                        height={1000}
-                        className="object-fill w-full h-full"
-                    />
-                    </div>
-                </CardContent>
-                </Card>
-            </CarouselItem>
-          ))}
-        </CarouselContent>
-        <CarouselPrevious
-          className="w-5 h-5 text-xs"
-          style={{ background: "var(--pink)", color: "#fff" }}
-        />
-        <CarouselNext
-          className="w-5 h-5 text-xs"
-          style={{ background: "var(--pink)", color: "#fff" }}
-        />
-      </Carousel>
+    <div className="max-w-5xl mx-auto px-4">
+      {/* Seção do logo + slogan */}
+      <div className="flex flex-col items-center mt-4 mb-8">
+        <Image src="/big-logo.png" alt="Logo" width={300} height={100} className="mb-4" />
+        <h1 className="text-xl sm:text-2xl md:text-3xl font-bold text-center">
+          <span className="typing-animation">Onde a curiosidade encontra a ciência</span>
+        </h1>
+      </div>
+
+      {/* Carrossel com botões */}
+      <div className="flex items-center gap-2">
+        {/* Botão Voltar */}
+        <button
+          onClick={scrollPrev}
+          className="w-4 h-4 flex items-center justify-center rounded-full focus:outline-none"
+          style={{ backgroundColor: "var(--pink)" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-2 h-2 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          </svg>
+        </button>
+
+        {/* Carrossel */}
+        <div className="embla flex-1 overflow-hidden" ref={emblaRef}>
+          <div className="embla__container flex gap-2">
+            {images.map((src, index) => (
+              <div key={index} className="embla__slide flex-shrink-0 w-20 sm:w-24 md:w-28">
+                <div className="relative w-full h-20 sm:h-24 md:h-28">
+                  <Image
+                    src={src}
+                    alt={`Imagem ${index + 1}`}
+                    layout="fill"
+                    objectFit="cover"
+                    className="rounded-md shadow-md"
+                  />
+                </div>
+              </div>
+            ))}
+          </div>
+        </div>
+
+        {/* Botão Avançar */}
+        <button
+          onClick={scrollNext}
+          className="w-4 h-4 flex items-center justify-center rounded-full focus:outline-none"
+          style={{ backgroundColor: "var(--pink)" }}
+        >
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            className="w-2 h-2 text-white"
+            fill="none"
+            viewBox="0 0 24 24"
+            stroke="currentColor"
+          >
+            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          </svg>
+        </button>
+      </div>
+
+      {/* CSS para typing animation infinita */}
+      <style jsx>{`
+        .typing-animation {
+          display: inline-block;
+          overflow: hidden;
+          white-space: nowrap;
+          border-right: 2px solid var(--pink);
+          animation: typing 4s steps(40, end) infinite alternate, blink 0.75s step-end infinite;
+        }
+
+        @keyframes typing {
+          from { width: 0 }
+          to { width: 100% }
+        }
+
+        @keyframes blink {
+          50% { border-color: transparent; }
+        }
+      `}</style>
     </div>
   );
 }

@@ -8,14 +8,16 @@ import Values from "@/components/values";
 import Vision from "@/components/vision";
 import Hero from "@/components/hero";
 import { Suspense } from "react";
+import AboutUs from "@/components/about-us";
 
 export default function Home() {
   return (
     <>
       <Header />
-      <main>
+      <main className="p-4 text-2xl ">
         <Hero/>
         <section>
+          <AboutUs/>
           <Mission />
           <Vision />
           <Values />  
