@@ -27,25 +27,36 @@ const Contact: React.FC = () => {
 
       // Verificar se a resposta é JSON
       const contentType = res.headers.get("content-type");
+      let data;
+      
       if (contentType && contentType.indexOf("application/json") !== -1) {
-        const data = await res.json();
-        if (res.ok) {
-          setStatus("Mensagem enviada com sucesso!");
-          setForm({ name: "", email: "", message: "" });
-        } else {
-          setStatus(data.message || "Erro ao enviar mensagem");
-        }
+        data = await res.json();
       } else {
-        // Se não for JSON, provavelmente é uma página de erro
-        setStatus("Erro no servidor. Por favor, tente novamente mais tarde.");
+        // Tentar parsear como JSON mesmo assim, ou criar um objeto de erro
+        try {
+          await res.text();
+          data = { message: `Erro do servidor: ${res.status}` };
+        } catch {
+          data = { message: "Erro de conexão com o servidor" };
+        }
+      }
+
+      if (res.ok) {
+        setStatus("Mensagem enviada com sucesso!");
+        setForm({ name: "", email: "", message: "" });
+      } else {
+        setStatus(data.message || "Erro ao enviar mensagem");
       }
     } catch (error) {
       console.error("Erro ao enviar formulário:", error);
-      setStatus("Erro de conexão. Por favor, verifique sua internet e tente novamente.");
+      setStatus("Erro de conexão. Por favor, tente novamente mais tarde.");
     } finally {
       setIsLoading(false);
     }
   };
+
+  // Função para verificar se o campo tem valor
+  const hasValue = (value: string) => value && value.length > 0;
 
   return (
     <section className="py-8 px-4 md:px-6 bg-gray-50" id="contato">
@@ -55,13 +66,15 @@ const Contact: React.FC = () => {
           <input
             type="text"
             name="name"
-            placeholder=" "
+            placeholder="Nome"
             value={form.name}
             onChange={handleChange}
-            className="w-full p-3 border-b-2 border-gray-300 focus:outline-none focus:border-[#f53098] bg-transparent text-sm"
+            className="w-full p-3 border-b-2 border-gray-300 focus:outline-none focus:border-[#f53098] bg-transparent text-sm peer"
             required
           />
-          <label className="absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#f53098]">
+          <label className={`absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 pointer-events-none ${
+            hasValue(form.name) ? 'top-0 text-xs text-[#f53098]' : ''
+          }`}>
             Nome
           </label>
         </div>
@@ -70,13 +83,15 @@ const Contact: React.FC = () => {
           <input
             type="email"
             name="email"
-            placeholder=" "
+            placeholder="Email"
             value={form.email}
             onChange={handleChange}
-            className="w-full p-3 border-b-2 border-gray-300 focus:outline-none focus:border-[#f53098] bg-transparent text-sm"
+            className="w-full p-3 border-b-2 border-gray-300 focus:outline-none focus:border-[#f53098] bg-transparent text-sm peer"
             required
           />
-          <label className="absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#f53098]">
+          <label className={`absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 pointer-events-none ${
+            hasValue(form.email) ? 'top-0 text-xs text-[#f53098]' : ''
+          }`}>
             Email
           </label>
         </div>
@@ -84,13 +99,15 @@ const Contact: React.FC = () => {
         <div className="relative">
           <textarea
             name="message"
-            placeholder=" "
+            placeholder="Mensagem"
             value={form.message}
             onChange={handleChange}
-            className="w-full p-3 border-b-2 border-gray-300 focus:outline-none focus:border-[#f53098] bg-transparent text-sm min-h-[100px]"
+            className="w-full p-3 border-b-2 border-gray-300 focus:outline-none focus:border-[#f53098] bg-transparent text-sm min-h-[100px] peer"
             required
           />
-          <label className="absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 pointer-events-none peer-placeholder-shown:top-3 peer-placeholder-shown:text-sm peer-focus:top-0 peer-focus:text-xs peer-focus:text-[#f53098]">
+          <label className={`absolute left-0 top-3 text-sm text-gray-500 transition-all duration-200 pointer-events-none ${
+            hasValue(form.message) ? 'top-0 text-xs text-[#f53098]' : ''
+          }`}>
             Mensagem
           </label>
         </div>
