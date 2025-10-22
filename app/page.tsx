@@ -6,6 +6,7 @@ import MissionVision from "@/components/missionvision";
 import Values from "@/components/values";
 import { Suspense } from "react";
 import Contact from "@/components/contact";
+import Projetos from "@/components/projetos";
 
 export default function Home() {
   return (
@@ -16,6 +17,7 @@ export default function Home() {
         <Hero />
         <Sobre />
         <MissionVision />
+        <Projetos/>
         <Values />
         <Suspense fallback={<div className="py-16 text-center">Carregando contato...</div>}>
           <Contact />

@@ -2,12 +2,15 @@
 
 import Image from "next/image";
 import { FaInstagram } from 'react-icons/fa6';
+import { useRouter } from "next/navigation";
 
 export default function Footer() {
-  // Função para rolar até a seção
-  const scrollToSection = (sectionId: string) => {
+  const router = useRouter();
+
+  // Função para navegação
+  const goToSection = (sectionId: string) => {
     if (sectionId === 'home') {
-      window.scrollTo({ top: 0, behavior: 'smooth' });
+      router.push('/'); // volta para a raiz
     } else {
       const element = document.getElementById(sectionId);
       if (element) {
@@ -21,9 +24,9 @@ export default function Footer() {
       <div className="max-w-5xl mx-auto px-4">
         <div className="flex flex-col md:flex-row justify-between items-center gap-6">
           
-          {/* Logo pequena (ainda maior) */}
+          {/* Logo clicável */}
           <div className="flex-shrink-0">
-            <button onClick={() => scrollToSection('home')} className="cursor-pointer">
+            <button onClick={() => goToSection('home')} className="cursor-pointer">
               <Image
                 src="/small-logo.png"
                 alt="Logo pequena"
@@ -34,29 +37,29 @@ export default function Footer() {
             </button>
           </div>
 
-          {/* Links de navegação (um em cima do outro) */}
+          {/* Links de navegação */}
           <nav className="flex flex-col items-center gap-2 text-base font-bold">
             <button 
-              onClick={() => scrollToSection('home')} 
+              onClick={() => goToSection('home')} 
               className="hover:text-gray-600 transition-colors py-1"
             >
               Home
             </button>
             <button 
-              onClick={() => scrollToSection('sobre')} 
+              onClick={() => goToSection('sobre')} 
               className="hover:text-gray-600 transition-colors py-1"
             >
               Sobre
             </button>
             <button 
-              onClick={() => scrollToSection('contato')} 
+              onClick={() => goToSection('contato')} 
               className="hover:text-gray-600 transition-colors py-1"
             >
               Contato
             </button>
           </nav>
 
-          {/* Instagram (menor ainda) */}
+          {/* Instagram */}
           <div className="flex items-center">
             <a 
               href="https://instagram.com" 
