@@ -7,9 +7,9 @@ export default function Projetos() {
     <div className="flex flex-col min-h-screen bg-gray-50">
       <Header />
 
-      <main className="flex-1 px-2 md:px-4 py-6 md:py-8">
+      <main className="flex-1 px-2 sm:px-4 md:px-6 py-4 sm:py-6 md:py-8">
         <section className="max-w-6xl mx-auto">
-          <h1 className="text-4xl md:text-5xl font-bold text-black mb-8 text-center">
+          <h1 className="text-4xl sm:text-5xl font-bold text-black mb-8 text-center">
             Projetos
           </h1>
 

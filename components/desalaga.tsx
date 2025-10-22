@@ -24,7 +24,6 @@ export default function Desalaga() {
       breakpoints: {
         "(min-width: 768px)": {
           slidesToScroll: 1,
-          dragFree: false,
         },
       },
     },
@@ -35,10 +34,9 @@ export default function Desalaga() {
   const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
 
   return (
-    <div className="max-w-5xl mx-auto px-4 pt-6 pb-12 rounded-lg"
-      style={{ 
-        background: "linear-gradient(to bottom, #e0f0ff, #f9faff)" 
-      }}
+    <div
+      className="max-w-5xl mx-auto px-2 sm:px-4 pt-6 pb-12 rounded-lg"
+      style={{ background: "linear-gradient(to bottom, #e0f0ff, #f9faff)" }}
     >
       {/* TEXTO */}
       <div className="space-y-4 mb-6">
@@ -67,8 +65,10 @@ export default function Desalaga() {
         </p>
 
         <h3 className="text-2xl font-semibold text-blue-600 mt-4 mb-2">Resumo</h3>
-        <p className="text-gray-700 text-base md:text-lg text-justify"
-           style={{ hyphens: "auto", WebkitHyphens: "auto", msHyphens: "auto", textWrap: "pretty" }}>
+        <p
+          className="text-gray-700 text-base md:text-lg text-justify"
+          style={{ hyphens: "auto", WebkitHyphens: "auto", msHyphens: "auto", textWrap: "pretty" }}
+        >
           O projeto socioambiental <strong className="text-blue-700">Desalaga</strong> promove a mitigação
           dos danos oriundos das fortes chuvas, estruturando-se em três pilares:
           prever, alertar e solucionar. Para a previsão, é desenvolvido um
@@ -99,18 +99,24 @@ export default function Desalaga() {
         </button>
 
         <div className="embla flex-1 w-full overflow-hidden mb-4 md:mb-0" ref={emblaRef}>
-          <div className="embla__container flex w-full -mx-1">
+          <div className="embla__container flex">
             {imagens.map((img, index) => (
               <div
                 key={index}
-                className="embla__slide px-1 flex-[0_0_50%] aspect-square"
+                className="embla__slide px-1"
+                style={{
+                  flex: "0 0 100%", // mobile = 1 slide
+                  aspectRatio: "1 / 1", // altura = largura
+                  minWidth: "100%",
+                  ...(typeof window !== "undefined" && window.innerWidth >= 768 ? { flex: "0 0 50%" } : {}),
+                }}
               >
                 <div className="relative w-full h-full">
                   <Image
                     src={img}
                     alt={`Imagem ${index + 1}`}
                     fill
-                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover"
+                    className="rounded-lg shadow-md hover:shadow-lg object-cover object-center"
                     priority={index === 0}
                   />
                 </div>

@@ -19,12 +19,15 @@ export default function Projetos() {
         </p>
 
         {/* Botão de chamada para ação */}
-        <Link
-          href="/projetos"
-          className="inline-block bg-[#f53098] text-white font-semibold py-3 px-8 rounded-lg text-lg md:text-xl hover:bg-[#e81c8c] transition-all duration-300 shadow-md hover:shadow-lg"
-        >
-          Ver Projetos
-        </Link>
+        <div className="flex justify-center">
+          <Link
+            href="/projetos"
+            className="inline-block bg-[#f53098] text-white font-semibold py-3 px-8 rounded-lg text-lg md:text-xl hover:bg-[#e81c8c] transition-all duration-300 shadow-md hover:shadow-lg mx-auto"
+          >
+            Ver Projetos
+          </Link>
+        </div>
+
       </div>
     </section>
   );

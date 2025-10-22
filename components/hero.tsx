@@ -4,6 +4,7 @@ import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
 import { ChevronLeft, ChevronRight } from "lucide-react";
+
 import primeira from "@/public/hero/primeira.jpeg";
 import terceira from "@/public/hero/terceira.jpeg";
 import quarta from "@/public/hero/quarta.jpeg";
@@ -20,8 +21,7 @@ export default function Hero() {
       slidesToScroll: 1,
       breakpoints: {
         "(min-width: 768px)": {
-          slidesToScroll: 2,
-          dragFree: false,
+          slidesToScroll: 1,
         },
       },
     },
@@ -40,29 +40,34 @@ export default function Hero() {
         </h1>
       </div>
 
-      <div className="flex flex-col md:flex-row items-center gap-4">
+      <div className="flex items-center gap-4">
         <button
           onClick={scrollPrev}
-          className="hidden md:flex w-4 h-4 items-center justify-center rounded-full bg-[#f53098] text-white shadow-md hover:shadow-lg transition-all"
+          className="hidden md:flex w-6 h-6 items-center justify-center rounded-full bg-[#f53098] text-white"
           aria-label="Imagem anterior"
         >
-          <ChevronLeft className="w-2 h-2" />
+          <ChevronLeft className="w-3 h-3" />
         </button>
 
-        <div className="embla flex-1 w-full overflow-hidden mb-4 md:mb-0" ref={emblaRef}>
-          <div className="embla__container flex w-full -mx-2">
+        <div className="embla flex-1 overflow-hidden" ref={emblaRef}>
+          <div className="embla__container flex">
             {images.map((src, index) => (
               <div
                 key={index}
-                className="embla__slide px-2 flex-[0_0_100%] md:flex-[0_0_50%] aspect-square"
+                className="embla__slide px-1"
+                style={{
+                  flex: "0 0 100%", // mobile = 1 slide
+                  aspectRatio: "1 / 1",
+                  minWidth: "100%",
+                  ...(typeof window !== "undefined" && window.innerWidth >= 768 ? { flex: "0 0 50%" } : {}),
+                }}
               >
                 <div className="relative w-full h-full">
                   <Image
                     src={src}
                     alt={`Imagem ${index + 1}`}
                     fill
-                    sizes="(min-width: 768px) calc(50vw - 1rem), 100vw"
-                    className="rounded-lg shadow-md hover:shadow-lg transition-shadow object-cover"
+                    className="rounded-lg object-cover"
                     priority={index === 0}
                   />
                 </div>
@@ -73,35 +78,12 @@ export default function Hero() {
 
         <button
           onClick={scrollNext}
-          className="hidden md:flex w-4 h-4 items-center justify-center rounded-full bg-[#f53098] text-white shadow-md hover:shadow-lg transition-all"
+          className="hidden md:flex w-6 h-6 items-center justify-center rounded-full bg-[#f53098] text-white"
           aria-label="Próxima imagem"
         >
-          <ChevronRight className="w-2 h-2" />
+          <ChevronRight className="w-3 h-3" />
         </button>
       </div>
-
-      <style jsx>{`
-        .typing-animation {
-          display: inline-block;
-          overflow: hidden;
-          border-right: 3px solid #f53098;
-          animation: typing 2s steps(40, end) infinite alternate, blink 0.5s step-end infinite;
-          white-space: nowrap;
-        }
-        @keyframes typing {
-          from {
-            width: 0;
-          }
-          to {
-            width: 100%;
-          }
-        }
-        @keyframes blink {
-          50% {
-            border-color: transparent;
-          }
-        }
-      `}</style>
     </div>
   );
 }
