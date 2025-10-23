@@ -45,18 +45,6 @@ export default function Footer() {
             >
               Home
             </button>
-            <button 
-              onClick={() => goToSection('sobre')} 
-              className="hover:text-gray-600 transition-colors py-1"
-            >
-              Sobre
-            </button>
-            <button 
-              onClick={() => goToSection('contato')} 
-              className="hover:text-gray-600 transition-colors py-1"
-            >
-              Contato
-            </button>
           </nav>
 
           {/* Instagram */}

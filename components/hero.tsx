@@ -1,88 +1,75 @@
 "use client";
-import { useCallback } from "react";
+
 import Image from "next/image";
 import useEmblaCarousel from "embla-carousel-react";
 import Autoplay from "embla-carousel-autoplay";
-import { ChevronLeft, ChevronRight } from "lucide-react";
 
+import "@/app/globals.css";
 import primeira from "@/public/hero/primeira.jpeg";
 import terceira from "@/public/hero/terceira.jpeg";
 import quarta from "@/public/hero/quarta.jpeg";
 import quinta from "@/public/hero/quinta.jpeg";
 import sexta from "@/public/hero/sexta.jpeg";
 
-const images = [primeira,terceira, quarta, quinta, sexta];
+const images = [primeira, terceira, quarta, quinta, sexta];
 
 export default function Hero() {
-  const [emblaRef, emblaApi] = useEmblaCarousel(
+  const [emblaRef] = useEmblaCarousel(
     {
       loop: true,
       align: "start",
       slidesToScroll: 1,
-      breakpoints: {
-        "(min-width: 768px)": {
-          slidesToScroll: 1,
-        },
-      },
     },
     [Autoplay({ delay: 3000, stopOnInteraction: false })]
   );
 
-  const scrollPrev = useCallback(() => emblaApi && emblaApi.scrollPrev(), [emblaApi]);
-  const scrollNext = useCallback(() => emblaApi && emblaApi.scrollNext(), [emblaApi]);
-
   return (
-    <div className="max-w-5xl mx-auto px-4 pt-2 pb-12" id="home">
-      <div className="flex flex-col items-center mt-4 mb-6">
-        <Image src="/big-logo.png" alt="Logo" width={200} height={67} className="mb-3" />
-        <h1 className="text-xl font-bold text-center leading-tight">
-          <span className="typing-animation">Onde a curiosidade encontra a ciência</span>
-        </h1>
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 md:px-8 pt-6 sm:pt-8 md:pt-4 pb-10" id="home">
+      
+      {/* === Carrossel === */}
+      <div className="embla overflow-hidden rounded-xl shadow-md mb-6" ref={emblaRef}>
+        <div className="embla__container flex">
+          {images.map((src, index) => (
+            <div
+              key={index}
+              className="embla__slide flex-[0_0_100%] px-0"
+              style={{ aspectRatio: "16 / 9", minWidth: "100%" }}
+            >
+              <div className="relative w-full h-full">
+                <Image
+                  src={src}
+                  alt={`Imagem ${index + 1}`}
+                  fill
+                  className={`rounded-xl object-cover ${
+                    index >= 3 ? "object-[center_40%]" : "object-center"
+                  }`}
+                  priority={index === 0}
+                />
+              </div>
+            </div>
+          ))}
+        </div>
       </div>
 
-      <div className="flex items-center gap-4">
-        <button
-          onClick={scrollPrev}
-          className="hidden md:flex w-6 h-6 items-center justify-center rounded-full bg-[#f53098] text-white"
-          aria-label="Imagem anterior"
-        >
-          <ChevronLeft className="w-3 h-3" />
-        </button>
-
-        <div className="embla flex-1 overflow-hidden" ref={emblaRef}>
-          <div className="embla__container flex">
-            {images.map((src, index) => (
-              <div
-                key={index}
-                className="embla__slide px-1"
-                style={{
-                  flex: "0 0 100%", // mobile = 1 slide
-                  aspectRatio: "1 / 1",
-                  minWidth: "100%",
-                  ...(typeof window !== "undefined" && window.innerWidth >= 768 ? { flex: "0 0 50%" } : {}),
-                }}
-              >
-                <div className="relative w-full h-full">
-                  <Image
-                    src={src}
-                    alt={`Imagem ${index + 1}`}
-                    fill
-                    className="rounded-lg object-cover"
-                    priority={index === 0}
-                  />
-                </div>
-              </div>
-            ))}
-          </div>
+      {/* === Logo à esquerda, texto à direita === */}
+      <div className="flex flex-col md:flex-row items-center md:items-start justify-between gap-6">
+        {/* Logo */}
+        <div className="flex-1 flex justify-center md:justify-start">
+          <Image
+            src="/big-logo.png"
+            alt="Logo"
+            width={300}
+            height={150}
+            className="w-[180px] sm:w-[220px] md:w-[280px] lg:w-[320px] h-auto object-contain"
+          />
         </div>
 
-        <button
-          onClick={scrollNext}
-          className="hidden md:flex w-6 h-6 items-center justify-center rounded-full bg-[#f53098] text-white"
-          aria-label="Próxima imagem"
-        >
-          <ChevronRight className="w-3 h-3" />
-        </button>
+        {/* Texto */}
+        <div className="flex-1 text-center md:text-left">
+          <h1 id="where" className="text-2xl sm:text-3xl md:text-5xl lg:text-6xl leading-tight">
+            ONDE A CURIOSIDADE ENCONTRA A CIÊNCIA
+          </h1>
+        </div>
       </div>
     </div>
   );
