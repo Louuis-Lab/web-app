@@ -1,6 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Rubik+Mono+One&display=swap');
 @import "tailwindcss";
 @import "tw-animate-css";
+@font-face {
+  font-family: "Aventi";
+  src: url("/aventi/Aventi-Bold.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
 
 :root {
   --pink: #f53098;
@@ -44,12 +50,10 @@ body {
   color: var(--foreground);
 }
 
-
 #where {
-  font-family: "Rubik Mono One", monospace;
-  font-weight: 400;
-  font-style: normal;
+  font-family: 'Aventi', sans-serif !important;
 }
+
 
 
 

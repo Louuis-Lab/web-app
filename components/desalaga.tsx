@@ -31,7 +31,7 @@ export default function Desalaga() {
     >
       {/* === Caixa de texto branca === */}
       <div className="bg-white rounded-lg p-4 md:p-6 mb-6">
-        <h2 className="text-3xl md:text-4xl font-bold text-[#38abd1] mb-2">
+        <h2 id="where" className="text-3xl md:text-4xl font-bold text-[#38abd1] mb-2">
           Projeto <span className="text-[#38abd1]">Desalaga</span>
         </h2>
 
@@ -52,7 +52,7 @@ export default function Desalaga() {
 
         <p className="text-gray-800 text-base md:text-lg mt-2">
           <strong>Orientador:</strong> LOUIS FILLIP MAIA LINS SELVATTI <br />
-          <strong>Coorientador:</strong> LUCAS CAVALCANTI
+          <strong>Coorientador:</strong> LUCAS CAVALCANTI <span className="text-[#38abd1]">(2º FASE)</span>
         </p>
 
         <h3 className="text-2xl font-semibold text-[#38abd1] mt-4 mb-2">Resumo</h3>
@@ -61,9 +61,34 @@ export default function Desalaga() {
           dos danos oriundos das fortes chuvas, estruturando-se em três pilares: prever, alertar e solucionar.
           Para a previsão, é desenvolvido um aplicativo que fornecerá informações climáticas, pluviométricas e
           alertas de alagamentos. No aspecto de alerta, o aplicativo contará com bueiros inteligentes que
-          emitem notificações de alagamentos. Para a solução, o projeto introduz o <strong className="text-[#38abd1]">bueiro inteligente</strong>
-          e o uso do <strong className="text-[#38abd1]">concreto permeável</strong>.
+          emitem notificações de alagamentos. Para a solução, o projeto introduz o{" "}
+          <strong className="text-[#38abd1]">bueiro inteligente</strong>
+          {" "}e o uso do{" "}
+          <strong className="text-[#38abd1]">concreto permeável</strong>.
         </p>
+
+        {/* === Novo bloco de Premiações === */}
+        <h3 className="text-2xl font-semibold text-[#38abd1] mt-6 mb-3">
+          Premiações e Reconhecimento
+        </h3>
+
+        <ul className="list-disc pl-6 text-gray-800 text-base md:text-lg space-y-2">
+          <li>
+            <strong>Desafio Liga Jovem</strong> – Organizado pelo SEBRAE, foi um dos projetos finalistas de Brasília em 2024.
+          </li>
+          <li>
+            <strong>Hackathon do SEBRAE</strong> – Participou da capacitação de jovens empreendedores em 2024.
+          </li>
+          <li>
+            <strong>Mundo Senai</strong> – Por três anos consecutivos (2023–2025), apresentou o projeto a estudantes do Senai e de escolas públicas.
+          </li>
+          <li>
+            <strong>Semana Nacional de Ciências e Tecnologia</strong> – Por dois anos consecutivos (2024–2025), foi convidado pela SNCT a apresentar sua ideia na feira.
+          </li>
+          <li>
+            <strong>CIRSOL</strong> – Convidado a expor o projeto na II Conferência Internacional de Resíduos Sólidos e Sanitários.
+          </li>
+        </ul>
       </div>
 
       {/* === Carrossel com fundo verde-água === */}

@@ -9,7 +9,7 @@ export default function Projetos() {
 
       <main className="flex-1 px-2 sm:px-4 md:px-6 py-4">
         <section className="max-w-7xl mx-auto">
-          <h1 className="text-4xl sm:text-5xl font-bold text-black mb-4 text-center">
+          <h1 id="where" className="text-4xl sm:text-5xl font-bold text-black mb-4 text-center tittle">
             Projetos
           </h1>
 

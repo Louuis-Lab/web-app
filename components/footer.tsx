@@ -50,7 +50,7 @@ export default function Footer() {
           {/* Instagram */}
           <div className="flex items-center">
             <a 
-              href="https://instagram.com" 
+              href="https://www.instagram.com/loouislab/" 
               target="_blank" 
               rel="noopener noreferrer"
               className="flex items-center gap-2 hover:text-gray-600 transition-colors"

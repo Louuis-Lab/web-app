@@ -27,7 +27,6 @@ export default function Header() {
   const goToSection = (idOrUrl: string) => {
     if (idOrUrl === "sobre") {
       setScrollTarget("sobre"); // seta o alvo para scroll
-      router.push("/"); // sempre volta para home
     } else if (idOrUrl === "contato") {
       const element = document.getElementById("contato");
       if (element) element.scrollIntoView({ behavior: "smooth" });
@@ -37,8 +36,6 @@ export default function Header() {
       router.push("/");
     } else if (idOrUrl === "valores") {
       router.push("/valores");
-    } else if (idOrUrl === "missaoevisao") {
-      router.push("/missaoevisao");
     }
 
     setIsMenuOpen(false);
@@ -47,10 +44,9 @@ export default function Header() {
   const navItems = [
     { label: "Home", id: "home" },
     { label: "Sobre", id: "sobre" },
-    { label: "Valores", id: "valores" },
-    { label: "Missão e Visão", id: "missaoevisao" },
-    { label: "Projetos", id: "projetos" },
     { label: "Contato", id: "contato" },
+    { label: "Valores", id: "valores" },
+    { label: "Projetos", id: "projetos" },
   ];
 
   return (
